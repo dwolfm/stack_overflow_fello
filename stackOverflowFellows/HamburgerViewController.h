@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "StackoverflowSearchBarDelagate.h"
 @interface HamburgerViewController : UIViewController
+@property (weak) id <StackoverflowSearchBarDelagate> delagate;
 
 @end

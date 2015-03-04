@@ -7,8 +7,14 @@
 //
 
 #import "SearchViewController.h"
+#import "StackoverflowSearchBarDelagate.h"
+#import "HamburgerViewController.h"
+#import "StackOverflowService.h"
+#import "Question.h"
+@interface SearchViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@interface SearchViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong,nonatomic) NSArray *myResults;
 
 @end
 
@@ -17,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
 
     self.navigationController.navigationBar.barTintColor = [[UIColor alloc] initWithRed:0.7 green: 1 blue: 1 alpha:1];
@@ -27,6 +35,37 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+-(void)didFinishEditing:(NSString *)searchString {
+    NSLog(@"got the string maslug: %@", searchString);
+    [[StackOverflowService sharedService] fetchQusetionsWithSearchTerm:searchString completionHandler:^(NSArray *results, NSString *error) {
+        if (error) {
+            NSLog(@"EEKK TWAZ N ERROR : %@", error);
+        } else {
+            NSLog(@"No error;");
+            if (results){
+                self.myResults = results;
+                [self.tableView reloadData];
+            } else {
+                NSLog(@"arg somefin went realy wrong");
+            }
+            
+        }
+    } ];
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.myResults count];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SEARCH_CELL"];
+    Question *question = self.myResults[indexPath.row];
+    cell.textLabel.text = question.title;
+    return cell;
 }
 
 /*

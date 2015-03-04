@@ -7,8 +7,9 @@
 //
 
 #import "HamburgerViewController.h"
-
-@interface HamburgerViewController ()
+#import "SearchViewController.h"
+#import <CoreGraphics/CoreGraphics.h>
+@interface HamburgerViewController () <UITextFieldDelegate>
 
 @property (strong,nonatomic) UINavigationController *navController;
 @property (strong,nonatomic) UIViewController *topViewController;
@@ -36,6 +37,9 @@
     [self.view addSubview:self.navController.view];
     [self.navController didMoveToParentViewController:self];
     
+    SearchViewController *searchVC = (SearchViewController *) self.navController.topViewController;
+    self.delagate = searchVC;
+    
     self.topViewController = self.navController;
     
     UIButton *button = [[UIButton alloc] initWithFrame: CGRectMake(10, 10, 25 , 25)];
@@ -52,9 +56,13 @@
 
     textField.placeholder = @"Search:";
     textField.backgroundColor = [UIColor whiteColor];
+    
     self.searchField = textField;
+    self.searchField.delegate = self;
+
     [self.navController.view addSubview:searchPadding];
     [self.navController.view addSubview:self.searchField];
+
     
     self.tapToClose = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBurger)];
     self.slideRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action: @selector(slideBurger:)];
@@ -79,6 +87,10 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         self.topViewController.view.center = CGPointMake(weakSelf.topViewController.view.center.x + 150, weakSelf.topViewController.view.center.y);
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.burgerButton setTransform: CGAffineTransformRotate(self.burgerButton.transform, M_PI/2)];
+        }];
+        
     } completion:^(BOOL finished) {
         [weakSelf.topViewController.view addGestureRecognizer:self.tapToClose];
         [weakSelf.view addGestureRecognizer:weakSelf.slideRecognizer];
@@ -94,6 +106,9 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         weakSelf.topViewController.view.center = weakSelf.view.center;
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.burgerButton setTransform: CGAffineTransformRotate(self.burgerButton.transform, -M_PI/2)];
+        }];
     }completion:^(BOOL finished) {
         weakSelf.burgerButton.userInteractionEnabled = true;
     }];
@@ -108,6 +123,13 @@
     if ( [pan state] == UIGestureRecognizerStateChanged){
         if ((velocity.x > 0 || self.topViewController.view.frame.origin.x > 0 ) && self.topViewController.view.frame.origin.x < 150){
             self.topViewController.view.center = CGPointMake(self.topViewController.view.center.x + translatedPoint.x, self.topViewController.view.center.y);
+
+            
+
+        } else if ((velocity.x < 0 && self.topViewController.view.frame.origin.x > 0)) {
+            self.topViewController.view.center = CGPointMake(self.topViewController.view.center.x + translatedPoint.x, self.topViewController.view.center.y);
+
+            
             [pan setTranslation:CGPointZero inView:self.view];
         }
     }
@@ -116,20 +138,28 @@
         __weak HamburgerViewController *weakSelf = self;
 
         
-        if (self.topViewController.view.frame.origin.x > 30) {
+        if ((self.topViewController.view.frame.origin.x > 30) && velocity.x > 0) {
             self.burgerButton.userInteractionEnabled = false;
-            [UIView animateWithDuration:0.3 animations:^{
+            [UIView animateWithDuration:0.1 animations:^{
                 self.topViewController.view.center = CGPointMake(weakSelf.view.frame.size.width /2 + 150, weakSelf.topViewController.view.center.y);
-                
+                [UIView animateWithDuration:0.3 animations:^{
+                    [self.burgerButton setTransform: CGAffineTransformRotate(self.burgerButton.transform, M_PI/2)];
+                }];
             }completion:^(BOOL finished) {
                 [weakSelf.topViewController.view addGestureRecognizer:weakSelf.tapToClose];
+                [weakSelf.topViewController.view addGestureRecognizer:weakSelf.slideRecognizer];
             }];
         } else {
             self.burgerButton.userInteractionEnabled = false;
             __weak HamburgerViewController *weakSelf = self;
             
-            [UIView animateWithDuration:0.3 animations:^{
+            [UIView animateWithDuration:0.1 animations:^{
                 weakSelf.topViewController.view.center = weakSelf.view.center;
+
+                    [UIView animateWithDuration:0.3 animations:^{
+                        [self.burgerButton setTransform: CGAffineTransformRotate(self.burgerButton. transform, -M_PI/2)];
+                    }];
+
             }completion:^(BOOL finished) {
                 weakSelf.burgerButton.userInteractionEnabled = true;
             }];
@@ -151,5 +181,12 @@
 
 
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.searchField resignFirstResponder];
+    NSLog(@"lul wat it be texed)");
+
+    [self.delagate didFinishEditing: self.searchField.text];
+    return true;
+}
 
 @end

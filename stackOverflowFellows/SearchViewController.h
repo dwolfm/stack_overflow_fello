@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SearchViewController : UIViewController
-
+#import "StackoverflowSearchBarDelagate.h"
+@interface SearchViewController : UIViewController <StackoverflowSearchBarDelagate>
+@property (strong, nonatomic) UITextField *searchBar;
 @end
