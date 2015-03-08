@@ -20,6 +20,7 @@
 		550A54CB1A92E30400726B94 /* WebOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 550A54CA1A92E30400726B94 /* WebOAuthViewController.m */; };
 		550A54D11A93FBBA00726B94 /* StackOverflowService.m in Sources */ = {isa = PBXBuildFile; fileRef = 550A54D01A93FBBA00726B94 /* StackOverflowService.m */; };
 		550A54D41A940E2500726B94 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 550A54D31A940E2500726B94 /* Question.m */; };
+		C4D2DD951AAC10510032FB33 /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D2DD941AAC10510032FB33 /* QuestionTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		550A54D01A93FBBA00726B94 /* StackOverflowService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackOverflowService.m; sourceTree = "<group>"; };
 		550A54D21A940E2500726B94 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
 		550A54D31A940E2500726B94 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
+		C4D2DD931AAC10510032FB33 /* QuestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewCell.h; sourceTree = "<group>"; };
+		C4D2DD941AAC10510032FB33 /* QuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +111,8 @@
 				550A54D31A940E2500726B94 /* Question.m */,
 				550A54C61A92BB6100726B94 /* SearchViewController.h */,
 				550A54C71A92BB6100726B94 /* SearchViewController.m */,
+				C4D2DD931AAC10510032FB33 /* QuestionTableViewCell.h */,
+				C4D2DD941AAC10510032FB33 /* QuestionTableViewCell.m */,
 				550A54CC1A93F29A00726B94 /* StackoverflowSearchBarDelagate.h */,
 				550A54C01A92ACAA00726B94 /* MenuTableViewController.h */,
 				550A54C11A92ACAA00726B94 /* MenuTableViewController.m */,
@@ -250,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				550A54CB1A92E30400726B94 /* WebOAuthViewController.m in Sources */,
+				C4D2DD951AAC10510032FB33 /* QuestionTableViewCell.m in Sources */,
 				550A54C21A92ACAA00726B94 /* MenuTableViewController.m in Sources */,
 				550A549D1A92993400726B94 /* AppDelegate.m in Sources */,
 				550A54A01A92993400726B94 /* stackOverflowFellows.xcdatamodeld in Sources */,
@@ -450,6 +456,7 @@
 				550A54BC1A92993400726B94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		550A54BD1A92993400726B94 /* Build configuration list for PBXNativeTarget "stackOverflowFellowsTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +465,7 @@
 				550A54BF1A92993400726B94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface StackOverflowService : NSObject
 +(id)sharedService;
 -(void)fetchQusetionsWithSearchTerm:(NSString *)searchTerm completionHandler:(void (^)(NSArray *results, NSString *error)) completionHandler;
-
+-(void)fetchImageForURL: (NSString *)avatarURL completionHandler:(void (^) (UIImage *image))completionHandler;
 @end

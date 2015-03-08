@@ -73,4 +73,16 @@
 }
 
 
+-(void)fetchImageForURL: (NSString *)avatarURL completionHandler:(void (^) (UIImage *image))completionHandler{
+    dispatch_queue_t imageQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+    dispatch_async(imageQueue, ^{
+        NSURL *url = [NSURL URLWithString:avatarURL];
+        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        UIImage *image = [UIImage imageWithData:data];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completionHandler(image);
+        });
+    }); 
+}
+
 @end

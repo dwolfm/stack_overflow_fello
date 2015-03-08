@@ -11,6 +11,8 @@
 #import "HamburgerViewController.h"
 #import "StackOverflowService.h"
 #import "Question.h"
+#import "QuestionTableViewCell.h"
+
 @interface SearchViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -62,9 +64,18 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SEARCH_CELL"];
+        QuestionTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SEARCH_CELL"];
     Question *question = self.myResults[indexPath.row];
-    cell.textLabel.text = question.title;
+    cell.label.text = question.title;
+    cell.imageView.image = nil;
+    if (!question.image){
+        [[StackOverflowService sharedService] fetchImageForURL:question.avatarURL completionHandler:^(UIImage *image) {
+            question.image = image;
+            cell.imageView.image = question.image;
+        }];
+    } else {
+        cell.imageView.image = question.image;
+    }
     return cell;
 }
 
